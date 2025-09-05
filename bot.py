@@ -42,7 +42,8 @@ async def receive_cookies(update: Update, context: CallbackContext):
     file = update.message.document
     if file and file.file_name.endswith(".txt"):
         path = f"cookies_users/{update.effective_user.id}.txt"
-        await file.get_file().download(path)
+        tg_file = await file.get_file()                # await porque es coroutine
+        await tg_file.download_to_drive(path)          # nueva forma de descargar
         await update.message.reply_text("✅ Cookies guardadas correctamente.")
     else:
         await update.message.reply_text("❌ Solo se aceptan archivos .txt de cookies.")
@@ -76,7 +77,7 @@ async def download_video(update: Update, context: CallbackContext):
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
         await update.message.reply_text("✅ Video descargado exitosamente.")
-        # Para enviar el video al usuario:
+        # Si quieres enviar el video al chat:
         # await update.message.reply_video(open(f"{user_id}_video.mp4", "rb"))
     except Exception as e:
         await update.message.reply_text(f"❌ Error: {e}")
