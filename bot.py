@@ -22,7 +22,9 @@ import yt_dlp
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
-TOKEN = os.getenv("TOKEN")  # Se tomará del entorno en Render
+TOKEN = os.getenv("TOKEN")  # Se tomará del entorno en Renderimport os
+print("TOKEN:", TOKEN)  # <- solo para debug, luego lo borras
+
 
 # Descargar video con yt-dlp
 def descargar_video(url, filename="video.mp4"):
@@ -63,4 +65,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
